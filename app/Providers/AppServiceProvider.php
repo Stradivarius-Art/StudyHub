@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Action\CertificateAction;
-use App\Action\PaymentAction;
+use App\Actions\CertificateAction;
+use App\Actions\PaymentAction;
 use App\Contracts\AuthInterface;
 use App\Contracts\CertificateInterface;
 use App\Contracts\CourseInterface;

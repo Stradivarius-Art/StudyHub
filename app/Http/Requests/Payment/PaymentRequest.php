@@ -14,7 +14,7 @@ class PaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_id' => 'required|string|unique:orders,order_id',
+            'order_id' => 'required|string',
             'status' => 'required|in:success,failed'
         ];
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Action;
+namespace App\Actions;
 
 use App\Contracts\CertificateInterface;
 use App\Enums\PaymentStatus;
