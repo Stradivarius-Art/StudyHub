@@ -45,7 +45,7 @@ class OrderService implements OrderInterface
             ->where('user_id', auth()->id())
             ->firstOrFail();
 
-        if ($order->payment_status === PaymentStatus::SUCCESS->value) {
+        if ($order->payment_status->value === PaymentStatus::SUCCESS->value) {
             return response()->json([
                 'status' => 'was payed'
             ], 418);
