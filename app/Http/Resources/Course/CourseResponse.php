@@ -23,7 +23,6 @@ class CourseResponse extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'video_link' => $this->video_link,
             'hours' => $this->hours,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
