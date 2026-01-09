@@ -20,7 +20,6 @@ return new class extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->decimal('price', 10, 2);
-            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +20,28 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Course newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Course newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Course query()
+ * @property int $id
+ * @property string $name
+ * @property string $description
+ * @property string $hours
+ * @property string|null $img
+ * @property \Illuminate\Support\Carbon $start_date
+ * @property \Illuminate\Support\Carbon $end_date
+ * @property string $price
+ * @property bool $is_active
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereHours($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereImg($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Course extends Model
@@ -36,8 +60,7 @@ class Course extends Model
         'img',
         'start_date',
         'end_date',
-        'price',
-        'is_active'
+        'price'
     ];
 
     /**
@@ -48,8 +71,7 @@ class Course extends Model
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
-        'price' => 'decimal:2',
-        'is_active' => 'boolean'
+        'price' => 'decimal:2'
     ];
 
     public function lessons(): HasMany
@@ -62,18 +84,22 @@ class Course extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function startDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => Carbon::parse($value)->format('Y-m-d H:i:s')
+        );
+    }
+
+    public function endDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => Carbon::parse($value)->format('Y-m-d H:i:s')
+        );
+    }
+
     public function certificates(): HasMany
     {
         return $this->hasMany(Certificate::class);
-    }
-
-    public function scopeActive($query): mixed
-    {
-        return $query->where('active', true);
-    }
-
-    public function scopeAvailableForRegistration($query): mixed
-    {
-        return $query->where('start_date', '>', now());
     }
 }

@@ -6,6 +6,7 @@ use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property PaymentStatus $payment_status
@@ -15,6 +16,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Order newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Order newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Order query()
+ * @property int $id
+ * @property int|null $user_id
+ * @property int|null $course_id
+ * @property string $order_id
+ * @property string $amount
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereCourseId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order wherePaymentStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereUserId($value)
  * @mixin \Eloquent
  */
 class Order extends Model
@@ -54,18 +70,8 @@ class Order extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function certificate(): BelongsTo
+    public function certificate(): HasOne
     {
-        return $this->belongsTo(Certificate::class);
-    }
-
-    public function canBeCancelled(): bool
-    {
-        return in_array($this->payment_status, [PaymentStatus::PENDING, PaymentStatus::FAILED]);
-    }
-
-    public function isPaid(): bool
-    {
-        return $this->payment_status === PaymentStatus::SUCCESS;
+        return $this->hasOne(Certificate::class);
     }
 }

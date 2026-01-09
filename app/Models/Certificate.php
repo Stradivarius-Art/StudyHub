@@ -14,6 +14,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Certificate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Certificate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Certificate query()
+ * @property int $id
+ * @property int|null $user_id
+ * @property int|null $course_id
+ * @property int|null $order_id
+ * @property string $certificate_number
+ * @property \Illuminate\Support\Carbon $issue_date
+ * @property \Illuminate\Support\Carbon $expiry_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Certificate whereCertificateNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Certificate whereCourseId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Certificate whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Certificate whereExpiryDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Certificate whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Certificate whereIssueDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Certificate whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Certificate whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Certificate whereUserId($value)
  * @mixin \Eloquent
  */
 class Certificate extends Model
@@ -30,18 +48,6 @@ class Certificate extends Model
         'course_id',
         'order_id',
         'certificate_number',
-        'issue_date',
-        'expiry_date'
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'issue_date' => 'datetime',
-        'expiry_date' => 'datetime'
     ];
 
     public function user(): BelongsTo
@@ -57,17 +63,5 @@ class Certificate extends Model
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
-    }
-
-    // Методы
-    public function isValid(): bool
-    {
-        return $this->expiry_date > now() &&
-            substr($this->certificate_number, -1) === '1';
-    }
-
-    public function getStatusAttribute(): string
-    {
-        return $this->isValid() ? 'success' : 'failed';
     }
 }

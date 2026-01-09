@@ -29,8 +29,6 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->string('certificate_number')->unique();
-            $table->dateTime('issue_date');
-            $table->dateTime('expiry_date');
             $table->timestamps();
         });
     }

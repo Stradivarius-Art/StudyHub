@@ -6,6 +6,8 @@ use App\Contracts\AuthInterface;
 use App\Data\Auth\LoginData;
 use App\Data\Auth\RegisterData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
@@ -14,13 +16,13 @@ class AuthController extends Controller
         private readonly AuthInterface $service
     ) {}
 
-    public function register(RegisterData $data): JsonResponse
+    public function register(RegisterRequest $request): JsonResponse
     {
-        return $this->service->register($data->toArray());
+        return $this->service->register($request->toArray());
     }
 
-    public function login(LoginData $data): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
-        return $this->service->login($data->toArray());
+        return $this->service->login($request->toArray());
     }
 }

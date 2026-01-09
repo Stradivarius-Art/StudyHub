@@ -25,7 +25,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->string('order_id')->unique();
-            $table->enum('payment_status', [PaymentStatus::PENDING->value, PaymentStatus::SUCCESS->value, PaymentStatus::FAILED->value])->default(PaymentStatus::PENDING->value);
+            $table->string('payment_status');
             $table->decimal('amount', 10, 2);
             $table->timestamps();
         });

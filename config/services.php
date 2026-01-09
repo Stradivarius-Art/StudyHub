@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'payment' => [
+        'api_url' => env('PAYMENT_API_URL', 'http://localhost:7645/api/v1/')
+    ]
+
 ];

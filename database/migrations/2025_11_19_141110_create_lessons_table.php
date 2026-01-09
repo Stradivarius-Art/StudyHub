@@ -22,7 +22,6 @@ return new class extends Migration
             $table->text('description');
             $table->text('video_link');
             $table->decimal('hours', 4, 1);
-            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }
